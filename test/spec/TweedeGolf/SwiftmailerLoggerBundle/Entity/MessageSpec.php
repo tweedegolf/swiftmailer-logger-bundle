@@ -71,11 +71,22 @@ class MessageSpec extends ObjectBehavior
 
     function its_date_should_be_modifiable()
     {
-        $email = 'hugo@tweedegolf.com';
-        $this->setBcc($email);
-        $this->getBcc()->shouldReturn($email);
+        $date = new \DateTime();
+        $this->setDate($date);
+        $this->getDate()->shouldReturn($date);
     }
 
+    function its_charset_should_be_modifiable()
+    {
+        $charset = 'some-charset';
+        $this->setCharset($charset);
+        $this->getCharset()->shouldReturn($charset);
+    }
 
-
+    function its_priority_should_be_modifiable()
+    {
+        $priority = 1;
+        $this->setPriority($priority);
+        $this->getPriority()->shouldReturn($priority);
+    }
 }
