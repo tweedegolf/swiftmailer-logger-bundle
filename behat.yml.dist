@@ -1,0 +1,15 @@
+default:
+    extensions: ~
+        #Behat\Symfony2Extension: ~
+        #VIPSoft\DoctrineDataFixturesExtension\Extension:
+        #    lifetime: scenario
+        #    autoload: false
+        #    migrations: ~
+    autoload:
+        '': %paths.base%/test/features/bootstrap
+    suites:
+        base:
+            paths: [%paths.base%/test/features]
+            filters: { tags: "~@tbd" }
+            contexts:
+                - FeatureContext

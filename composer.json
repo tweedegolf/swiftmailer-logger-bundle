@@ -1,0 +1,31 @@
+{
+  "name": "tweedegolf/swiftmailer-logger-bundle",
+  "description": "Log emails sent with Swift Mailer",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hugo van de Pol",
+      "email": "hugo@tweedegolf.com"
+    }
+  ],
+  "require": {
+    "php": "~5.4",
+    "symfony/symfony": "~2.3",
+    "symfony/swiftmailer-bundle": "~2.3"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "~1.4",
+    "behat/behat": "~3.0",
+    "behat/symfony2-extension": "~2.0@dev",
+    "vipsoft/doctrine-data-fixtures-extension": "~3.0@dev",
+    "phpspec/phpspec": "~2.0",
+    "bravesheep/phpspec-expect": "~0.1",
+    "bravesheep/phpspec-extra-matchers": "~0.1",
+    "henrikbjorn/phpspec-code-coverage": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tweedegolf\\SwiftmailerLoggerBundle\\": "src/Tweedegolf/SwiftmailerLoggerBundle/"
+    }
+  }
+}

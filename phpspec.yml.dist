@@ -1,0 +1,10 @@
+extensions:
+    - PhpSpec\Extension\CodeCoverageExtension
+
+code_coverage:
+    format: html
+    output: build/coverage
+
+suites:
+    default:
+        spec_path: ./test
