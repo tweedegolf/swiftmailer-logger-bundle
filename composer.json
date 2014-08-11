@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Tweedegolf\\SwiftmailerLoggerBundle\\": "src/Tweedegolf/SwiftmailerLoggerBundle/"
+      "TweedeGolf\\SwiftmailerLoggerBundle\\": "src/TweedeGolf/SwiftmailerLoggerBundle/"
     }
   }
 }

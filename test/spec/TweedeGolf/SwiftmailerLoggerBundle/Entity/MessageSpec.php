@@ -34,7 +34,7 @@ class MessageSpec extends ObjectBehavior
         $this->getGeneratedId()->shouldReturn($id);
     }
 
-    function its_to_return_path_should_be_modifiable()
+    function its_return_path_should_be_modifiable()
     {
         $email = 'hugo@tweedegolf.com';
         $this->setReturnPath($email);
@@ -88,5 +88,12 @@ class MessageSpec extends ObjectBehavior
         $priority = 1;
         $this->setPriority($priority);
         $this->getPriority()->shouldReturn($priority);
+    }
+
+    function its_body_should_be_modifieable()
+    {
+        $body = 'some body';
+        $this->setBody($body);
+        $this->getBody()->shouldReturn($body);
     }
 }
