@@ -30,9 +30,9 @@ class LoggedMessage
     protected $id;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(type="string", length=511, nullable=false)
+     * @ORM\Column(name="from_field", type="array", length=511, nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
@@ -41,7 +41,7 @@ class LoggedMessage
     /**
      * @var array
      *
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(name="to_field", type="array", nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
@@ -64,9 +64,9 @@ class LoggedMessage
     private $returnPath;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", length=255, nullable=true)
      */
     private $replyTo;
 
@@ -87,7 +87,7 @@ class LoggedMessage
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="subject_field", type="string", length=255, nullable=true)
      */
     private $subject;
 
@@ -96,7 +96,7 @@ class LoggedMessage
      *
      * Different from the  Swift_message date field, which is a timestamp
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(name="date_field", type="datetime", nullable=false)
      */
     private $date;
 

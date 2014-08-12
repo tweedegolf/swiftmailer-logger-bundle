@@ -24,17 +24,13 @@ class DefaultController extends Controller
      */
     public function sendAction()
     {
-        //todo load message fixtures to test repeatedly
-
-        //todo hook listerner on kernel request that gets swiftmailer mailer as an argument
-        //and registers a "plugin" that implements Swift_Events_EventListener
-
         $email = \Swift_Message::newInstance();
-        $email->setTo("hugo+1@tweedegolf.com");
+        $email->setTo(['hugovandepol@gmail.com' => 'Hugo', 'hugo@tweedegolf.com' => 'blaat']);
         $email->setSubject('Subject');
-        $email->setFrom("support@tweedegolf.com");
+        $email->setFrom(["support@tweedegolf.com" => "blaat"], 'kaas');
+        $email->setReturnPath('support@blaat.com');
         $email->setBody("body");
-        $email->setBcc("hugo+bcc@tweedegolf.com");
+        $email->setBcc(["hugo+bcc@tweedegolf.com" => 'H', 'swag@gmail.com' => 's']);
 
         $sent = $this->container->get('mailer')->send($email);
 

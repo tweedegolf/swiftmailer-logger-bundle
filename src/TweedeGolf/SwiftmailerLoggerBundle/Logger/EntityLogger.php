@@ -4,7 +4,7 @@ namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Swift_Events_SendEvent;
-use TweedeGolf\SwiftmailerLoggerBundle\Entity\Message;
+use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
 class EntityLogger implements LoggerInterface
 {
@@ -19,12 +19,12 @@ class EntityLogger implements LoggerInterface
     {
         $sentMessage = $evt->getMessage();
 
-        $logMessage = new Message();
-        $logMessage->setMessageFields($sentMessage);
-        $logMessage->setResult($this->getReadableResult($evt->getResult()));
+        $loggedMessage = new LoggedMessage();
+        $loggedMessage->setMessageFields($sentMessage);
+        $loggedMessage->setResult($this->getReadableResult($evt->getResult()));
 
         $em = $this->doctrine->getManager();
-        $em->persist($logMessage);
+        $em->persist($loggedMessage);
         $em->flush();
     }
 
