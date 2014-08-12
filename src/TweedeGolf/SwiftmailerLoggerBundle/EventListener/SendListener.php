@@ -4,7 +4,7 @@ namespace TweedeGolf\SwiftmailerLoggerBundle\EventListener;
 
 use Swift_Events_SendEvent;
 use Swift_Events_SendListener;
-use TweedeGolf\SwiftmailerLoggerBundle\Util\EntityLogger;
+use TweedeGolf\SwiftmailerLoggerBundle\Logger\LoggerInterface;
 
 /**
  * Class SendListener
@@ -12,17 +12,11 @@ use TweedeGolf\SwiftmailerLoggerBundle\Util\EntityLogger;
  */
 class SendListener implements Swift_Events_SendListener
 {
-    private $entityLogger;
+    private $loggers;
 
-    private $logToEntity;
-
-    private $logToFile;
-
-    public function __construct(EntityLogger $entityLogger, $logToEntity, $logToFile)
+    public function __construct($loggers)
     {
-        $this->entityLogger = $entityLogger;
-        $this->logToEntity = $logToEntity;
-        $this->logToFile = $logToFile;
+        $this->loggers = $loggers;
     }
 
     /**
@@ -33,14 +27,15 @@ class SendListener implements Swift_Events_SendListener
     public function beforeSendPerformed(Swift_Events_SendEvent $evt){}
 
     /**
-     * Invoked immediately after the Message is sent.
+     * Log the event with each logger that was passed to this service
      *
      * @param Swift_Events_SendEvent $evt
      */
     public function sendPerformed(Swift_Events_SendEvent $evt)
     {
-        if ($this->logToEntity) {
-            $this->entityLogger->log($evt);
+        /** @var $logger LoggerInterface */
+        foreach($this->loggers as $logger) {
+            $logger->log($evt);
         }
     }
 }

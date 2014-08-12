@@ -1,12 +1,12 @@
 <?php
 
-namespace TweedeGolf\SwiftmailerLoggerBundle\Util;
+namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Swift_Events_SendEvent;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\Message;
 
-class EntityLogger
+class EntityLogger implements LoggerInterface
 {
     private $doctrine;
 

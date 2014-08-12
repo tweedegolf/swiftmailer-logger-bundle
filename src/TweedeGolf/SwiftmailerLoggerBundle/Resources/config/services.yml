@@ -2,11 +2,9 @@ services:
   tweedegolf_swiftmailer_logger.send_listener:
     class: TweedeGolf\SwiftmailerLoggerBundle\EventListener\SendListener
     arguments:
-      - @tweedegolf_swiftmailer_logger.entity_logger
-      - %tweede_golf_swiftmailer_logger.entity%
-      - %tweede_golf_swiftmailer_logger.file%
+      - [@tweedegolf_swiftmailer_logger.entity_logger]
 
   tweedegolf_swiftmailer_logger.entity_logger:
-    class:  TweedeGolf\SwiftmailerLoggerBundle\Util\EntityLogger
+    class:  TweedeGolf\SwiftmailerLoggerBundle\Logger\EntityLogger
     arguments:
       - @doctrine

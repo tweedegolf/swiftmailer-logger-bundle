@@ -10,14 +10,15 @@ use Swift_Mime_Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Message
+ * Class Message - represents a logged message
+ *
+ * Contains most of the properties that can be retrieved from a Swift_Message instance
  *
  * @package TweedeGolf\SwiftmailerLoggerBundle\Entity
- *
  * @Entity
  * @Table(name="tweedegolf_logged_message")
  */
-class Message
+class LoggedMessage
 {
     /**
      * @var integer
@@ -29,13 +30,13 @@ class Message
     protected $id;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(type="array", nullable=false)
+     * @ORM\Column(type="string", length=511, nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
-    private $fromEmail;
+    private $from;
 
     /**
      * @var array
@@ -44,7 +45,7 @@ class Message
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
-    private $toEmail;
+    private $to;
 
     /**
      * @var string
@@ -63,11 +64,11 @@ class Message
     private $returnPath;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $replyToEmail;
+    private $replyTo;
 
     /**
      * @var array
@@ -93,23 +94,11 @@ class Message
     /**
      * @var DateTime
      *
+     * Different from the  Swift_message date field, which is a timestamp
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $date;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $charset;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $priority;
 
     /**
      * @var string
@@ -120,6 +109,8 @@ class Message
 
     /**
      * @var string
+     *
+     * This is not a Swift_message field but a field to register the sending result
      *
      * @ORM\Column(type="string", length=127, nullable = false)
      * @Assert\NotNull()
@@ -184,22 +175,6 @@ class Message
     }
 
     /**
-     * @param string $charset
-     */
-    public function setCharset($charset)
-    {
-        $this->charset = $charset;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharset()
-    {
-        return $this->charset;
-    }
-
-    /**
      * @param \DateTime $date
      */
     public function setDate($date)
@@ -216,19 +191,19 @@ class Message
     }
 
     /**
-     * @param string $fromEmail
+     * @param string $from
      */
-    public function setFromEmail($fromEmail)
+    public function setFrom($from)
     {
-        $this->fromEmail = $fromEmail;
+        $this->from = $from;
     }
 
     /**
      * @return string
      */
-    public function getFromEmail()
+    public function getFrom()
     {
-        return $this->fromEmail;
+        return $this->from;
     }
 
     /**
@@ -248,35 +223,35 @@ class Message
     }
 
     /**
-     * @param int $priority
+     * @param string $replyTo
      */
-    public function setPriority($priority)
+    public function setReplyTo($replyTo)
     {
-        $this->priority = $priority;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param string $replyToEmail
-     */
-    public function setReplyToEmail($replyToEmail)
-    {
-        $this->replyToEmail = $replyToEmail;
+        $this->replyTo = $replyTo;
     }
 
     /**
      * @return string
      */
-    public function getReplyToEmail()
+    public function getReplyTo()
     {
-        return $this->replyToEmail;
+        return $this->replyTo;
+    }
+
+    /**
+     * @param string $result
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
     /**
@@ -312,45 +287,34 @@ class Message
     }
 
     /**
-     * @param string $toEmail
+     * @param array $to
      */
-    public function setToEmail($toEmail)
+    public function setTo($to)
     {
-        $this->toEmail = $toEmail;
+        $this->to = $to;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getToEmail()
+    public function getTo()
     {
-        return $this->toEmail;
+        return $this->to;
     }
 
     /**
-     * @param string $result
+     * Sets all fields from the passed Swift_Mime_Message instance that will be logged
+     *
+     * @param Swift_Mime_Message $message
      */
-    public function setResult($result)
-    {
-        $this->result = $result;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResult()
-    {
-        return $this->result;
-    }
-
     public function setMessageFields(Swift_Mime_Message $message)
     {
         $date = new DateTime();
         $this->setDate($date->setTimestamp($message->getDate()));
-        $this->setFromEmail($message->getFrom());
-        $this->setReplyToEmail($message->getReplyTo());
+        $this->setFrom($message->getFrom());
+        $this->setReplyTo($message->getReplyTo());
         $this->setReturnPath($message->getReturnPath());
-        $this->setToEmail($message->getTo());
+        $this->setTo($message->getTo());
         $this->setCc($message->getCc());
         $this->setBcc($message->getBcc());
         $this->setSubject($message->getSubject());
