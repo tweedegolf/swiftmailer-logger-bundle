@@ -39,8 +39,8 @@ class SendListener implements Swift_Events_SendListener
      */
     public function sendPerformed(Swift_Events_SendEvent $evt)
     {
-        if ($logToEntity) {
-
+        if ($this->logToEntity) {
+            $this->entityLogger->log($evt);
         }
     }
 }

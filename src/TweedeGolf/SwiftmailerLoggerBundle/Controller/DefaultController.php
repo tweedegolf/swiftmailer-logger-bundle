@@ -30,7 +30,7 @@ class DefaultController extends Controller
         //and registers a "plugin" that implements Swift_Events_EventListener
 
         $email = \Swift_Message::newInstance();
-        $email->setTo(["hugo+1@tweedegolf.com", "hugo+12312@tweedegolf.com"], ['name1', 'name2']);
+        $email->setTo("hugo+1@tweedegolf.com");
         $email->setSubject('Subject');
         $email->setFrom("support@tweedegolf.com");
         $email->setBody("body");

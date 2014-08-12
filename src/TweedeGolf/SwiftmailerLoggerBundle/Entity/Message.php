@@ -5,6 +5,8 @@ namespace TweedeGolf\SwiftmailerLoggerBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping as ORM;
+use Swift_Mime_Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,23 +15,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package TweedeGolf\SwiftmailerLoggerBundle\Entity
  *
  * @Entity
- * @Table(name="tweedegolf_message")
+ * @Table(name="tweedegolf_logged_message")
  */
 class Message
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
     private $fromEmail;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="array", nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
      */
@@ -52,9 +63,9 @@ class Message
     private $returnPath;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
     private $replyToEmail;
 
@@ -106,6 +117,23 @@ class Message
      * @ORM\Column(type="text", nullable=false)
      */
     private $body;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=127, nullable = false)
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     */
+    private $result;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param array $bcc
@@ -299,6 +327,34 @@ class Message
         return $this->toEmail;
     }
 
+    /**
+     * @param string $result
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
 
+    /**
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
 
+    public function setMessageFields(Swift_Mime_Message $message)
+    {
+        $date = new DateTime();
+        $this->setDate($date->setTimestamp($message->getDate()));
+        $this->setFromEmail($message->getFrom());
+        $this->setReplyToEmail($message->getReplyTo());
+        $this->setReturnPath($message->getReturnPath());
+        $this->setToEmail($message->getTo());
+        $this->setCc($message->getCc());
+        $this->setBcc($message->getBcc());
+        $this->setSubject($message->getSubject());
+        $this->setBody($message->getBody());
+        $this->setGeneratedId($message->getId());
+    }
 }
