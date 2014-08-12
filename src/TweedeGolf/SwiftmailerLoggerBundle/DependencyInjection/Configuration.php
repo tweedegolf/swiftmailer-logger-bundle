@@ -18,11 +18,13 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('TweedeGolf_swift_mailer_logger');
+        $rootNode = $treeBuilder->root('tweedegolf_swiftmailer_logger');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+            ->scalarNode('entity')->defaultTrue()->end()
+            ->scalarNode('file')->defaultFalse()->end()
+            ->end();
 
         return $treeBuilder;
     }

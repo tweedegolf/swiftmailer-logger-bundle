@@ -3,12 +3,17 @@
 namespace TweedeGolf\SwiftmailerLoggerBundle\Entity;
 
 use DateTime;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Message
  *
  * @package TweedeGolf\SwiftmailerLoggerBundle\Entity
+ *
+ * @Entity
+ * @Table(name="tweedegolf_message")
  */
 class Message
 {
@@ -294,6 +299,6 @@ class Message
         return $this->toEmail;
     }
 
-    
+
 
 }
