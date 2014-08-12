@@ -2,14 +2,20 @@
 
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Swift_Events_SendEvent;
+use Monolog\Logger;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
-class EntityLogger implements LoggerInterface
+class FileLogger implements LoggerInterface
 {
-    public function log(Swift_Events_SendEvent $evt)
+    private $logger;
+
+    public function __construct(Logger $logger)
     {
-        // todo: write implementation
+        $this->logger = $logger;
+    }
+
+    public function log(array $data)
+    {
+        $this->logger->log(100, 'blaat');
     }
 }

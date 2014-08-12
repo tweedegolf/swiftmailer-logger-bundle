@@ -3,8 +3,6 @@
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Psr\Log\AbstractLogger;
-use Swift_Events_SendEvent;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
 class EntityLogger implements LoggerInterface
