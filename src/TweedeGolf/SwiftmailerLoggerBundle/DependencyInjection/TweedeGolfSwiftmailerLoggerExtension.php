@@ -4,6 +4,7 @@ namespace TweedeGolf\SwiftmailerLoggerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -25,19 +26,18 @@ class TweedeGolfSwiftmailerLoggerExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        // both options are not required
-        if (isset($config['entity'])) {
-            $container->setParameter(
-                'tweede_golf_swiftmailer_logger.entity',
-                $config['entity']
-            );
-        }
+        // add loggers
+        if ($container->hasDefinition('tweedegolf_swiftmailer_logger.send_listener')) {
+            $def = $container->getDefinition('tweedegolf_swiftmailer_logger.send_listener');
 
-        if (isset($config['file'])) {
-            $container->setParameter(
-                'tweede_golf_swiftmailer_logger.file',
-                $config['file']
-            );
+            if ($config['entity']) {
+                $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.entity_logger')));
+            }
+
+            if ($config['file']) {
+                $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.file_logger')));
+            }
+            unset($def);
         }
     }
 }

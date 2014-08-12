@@ -9,5 +9,5 @@ use Swift_Events_SendEvent;
  */
 interface LoggerInterface {
 
-    public function log(Swift_Events_SendEvent $evt);
+    public function log(array $data);
 }

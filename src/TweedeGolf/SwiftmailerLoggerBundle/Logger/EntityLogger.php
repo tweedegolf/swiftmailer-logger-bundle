@@ -3,6 +3,7 @@
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Psr\Log\AbstractLogger;
 use Swift_Events_SendEvent;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
@@ -15,37 +16,18 @@ class EntityLogger implements LoggerInterface
         $this->doctrine = $doctrine;
     }
 
-    public function log(Swift_Events_SendEvent $evt)
+    public function log(array $data)
     {
-        $sentMessage = $evt->getMessage();
+        $sentMessage = $data['message'];
 
         $loggedMessage = new LoggedMessage();
         $loggedMessage->setMessageFields($sentMessage);
-        $loggedMessage->setResult($this->getReadableResult($evt->getResult()));
+        $loggedMessage->setResult($data['result']);
 
         $em = $this->doctrine->getManager();
         $em->persist($loggedMessage);
         $em->flush();
     }
 
-    private function getReadableResult($result)
-    {
-        if ($result === 1) {
-            return 'pending';
-        }
 
-        if ($result === 16) {
-            return 'success';
-        }
-
-        if ($result === 256) {
-            return 'tentative';
-        }
-
-        if ($result === 4096) {
-            return 'failed';
-        }
-
-        return 'unknown';
-    }
 }
