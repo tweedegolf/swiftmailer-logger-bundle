@@ -3,6 +3,7 @@
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
 use Monolog\Logger;
+use Swift_Message;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
 class FileLogger implements LoggerInterface
@@ -16,6 +17,12 @@ class FileLogger implements LoggerInterface
 
     public function log(array $data)
     {
-        $this->logger->log(100, 'blaat');
+        /** @var Swift_Message $message */
+        $message = $data['message'];
+        $from = 'test';
+        $message = sprintf("Email send from %s", $from);
+        $this->logger->addInfo($message);
+        var_dump('Logged it');
+        var_dump($this->logger->getHandlers());
     }
 }

@@ -11,7 +11,16 @@ services:
   tweedegolf_swiftmailer_logger.file_logger:
     class:  TweedeGolf\SwiftmailerLoggerBundle\Logger\FileLogger
     arguments:
-      - @logger
-    tags:
-      - { name: monolog.logger}
+      - @custom_logger
+
+  # do this in extension?
+  custom_logger:
+    class: Symfony\Bridge\Monolog\Logger
+    arguments: ['swiftmailer']
+    calls:
+        - [pushHandler, [@my_handler]]
+
+  my_handler:
+    class: Monolog\Handler\StreamHandler
+    arguments: [%kernel.root_dir%/logs/swiftmailer.log]
 
