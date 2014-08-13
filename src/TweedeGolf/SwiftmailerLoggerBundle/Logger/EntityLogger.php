@@ -2,6 +2,9 @@
 
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\ORMException;
+use \PDOException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
@@ -23,8 +26,26 @@ class EntityLogger implements LoggerInterface
         $loggedMessage->setResult($data['result']);
 
         $em = $this->doctrine->getManager();
-        $em->persist($loggedMessage);
-        $em->flush();
+
+        $message = false;
+
+        try {
+            $em->persist($loggedMessage);
+            $em->flush();
+        } catch (PDOException $e) {
+            $message = $e->getMessage();
+        } catch (DBALException $e) {
+            $message = $e->getMessage();
+        } catch (ORMException $e) {
+            $message = $e->getMessage();
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
+
+        if ($message !== false) {
+            // todo log message
+        }
+
     }
 
 

@@ -26,17 +26,14 @@ class TweedeGolfSwiftmailerLoggerExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        // add loggers
+        // add loggers to send listener
         if ($container->hasDefinition('tweedegolf_swiftmailer_logger.send_listener')) {
             $def = $container->getDefinition('tweedegolf_swiftmailer_logger.send_listener');
 
-            if ($config['entity']) {
+            if ($config['loggers']['entity_logger']['enabled']) {
                 $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.entity_logger')));
             }
 
-            if ($config['file']) {
-                $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.file_logger')));
-            }
             unset($def);
         }
     }

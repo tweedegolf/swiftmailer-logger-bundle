@@ -43,3 +43,5 @@ The final step is to update your database schema, such that `LoggedMessage` enti
 ## Usage
 With the above all set up, logging is automatic. The bundle provides a listener that listens to the
 `Swift_Events_SendEvent sendPerformed` event on which it passes on the data to be logged to any loggers configured.
+
+[composer]: https://getcomposer.org/

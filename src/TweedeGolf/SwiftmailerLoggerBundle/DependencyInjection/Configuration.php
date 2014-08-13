@@ -22,9 +22,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('entity')->defaultTrue()->end()
-            ->scalarNode('file')->defaultFalse()->end()
-            ->end();
+            ->arrayNode('loggers')
+            ->children()
+            ->arrayNode('entity_logger')
+            ->children()
+            ->booleanNode('enabled')->defaultTrue()
+        ;
 
         return $treeBuilder;
     }
