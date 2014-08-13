@@ -2,21 +2,41 @@
 
 namespace TweedeGolf\SwiftmailerLoggerBundle\Logger;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\ORM\ORMException;
-use \PDOException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Monolog\Logger;
 use TweedeGolf\SwiftmailerLoggerBundle\Entity\LoggedMessage;
 
+/**
+ * Class EntityLogger
+ * @package TweedeGolf\SwiftmailerLoggerBundle\Logger
+ *
+ * Responsible for logging the data passed by the SendListener using the LoggedMessage entity
+ */
 class EntityLogger implements LoggerInterface
 {
+    /**
+     * @var \Doctrine\Bundle\DoctrineBundle\Registry
+     */
     private $doctrine;
 
-    public function __construct(Registry $doctrine)
+    /**
+     * @var \Monolog\Logger
+     */
+    private $logger;
+
+    /**
+     * @param Registry $doctrine
+     * @param Logger $logger
+     */
+    public function __construct(Registry $doctrine, Logger $logger)
     {
         $this->doctrine = $doctrine;
+        $this->logger = $logger;
     }
 
+    /**
+     * @param array $data
+     */
     public function log(array $data)
     {
         $sentMessage = $data['message'];
@@ -27,26 +47,14 @@ class EntityLogger implements LoggerInterface
 
         $em = $this->doctrine->getManager();
 
-        $message = false;
-
+        // application should not crash when logging fails
         try {
             $em->persist($loggedMessage);
             $em->flush();
-        } catch (PDOException $e) {
-            $message = $e->getMessage();
-        } catch (DBALException $e) {
-            $message = $e->getMessage();
-        } catch (ORMException $e) {
-            $message = $e->getMessage();
         } catch (\Exception $e) {
-            $message = $e->getMessage();
+            $message = 'Logging sent message with TweedeGolf\SwiftmailerLoggerBundle\Logger\EntityLogger failed: ' .
+                $e->getMessage();
+            $this->logger->addError($message);
         }
-
-        if ($message !== false) {
-            // todo log message
-        }
-
     }
-
-
 }

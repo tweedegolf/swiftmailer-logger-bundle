@@ -12,6 +12,9 @@ use TweedeGolf\SwiftmailerLoggerBundle\Logger\LoggerInterface;
  */
 class SendListener implements Swift_Events_SendListener
 {
+    /**
+     * @var array containing LoggerInterface objects
+     */
     private $loggers = [];
 
     public function addLogger(LoggerInterface $logger)
@@ -48,6 +51,8 @@ class SendListener implements Swift_Events_SendListener
     }
 
     /**
+     * Turns the event result into a human readable string
+     *
      * @param Swift_Events_SendEvent $evt
      * @return string
      */

@@ -11,6 +11,12 @@ namespace TweedeGolf\SwiftmailerLoggerBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * Empty respository
+ *
+ * Class LoggedMessageRepository
+ * @package TweedeGolf\SwiftmailerLoggerBundle\Entity\Repository
+ */
 class LoggedMessageRepository extends EntityRepository
 {
   //stub

@@ -45,8 +45,8 @@ With the above all set up, logging is automatic. The bundle provides a listener 
 `Swift_Events_SendEvent sendPerformed` event on which it passes on the data to be logged to any loggers configured.
 
 ### Retrieving logged messages
-The bundle provides an empty repository that can be used to retrieve logged messages. Retrieve it in your custom
-controller by using:
+The bundle provides an empty `LoggedMessage` repository that can be used to retrieve messages logged by the entity logger.
+Retrieve it in your custom controller by using:
 
 ```
 $repo = $this->getDoctrine()->getRepository("TweedeGolfSwiftmailerLoggerBundle:LoggedMessage");

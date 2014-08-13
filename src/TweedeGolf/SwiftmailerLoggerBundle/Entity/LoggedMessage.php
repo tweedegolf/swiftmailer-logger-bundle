@@ -10,7 +10,7 @@ use Swift_Mime_Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Message - represents a logged message
+ * Class LoggedMessage - represents a logged message
  *
  * Contains most of the properties that can be retrieved from a Swift_Message instance
  *
