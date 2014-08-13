@@ -17,6 +17,14 @@ class SendListener implements Swift_Events_SendListener
      */
     private $loggers = [];
 
+    /**
+     * @var array keep array of ids of messages that were sent to avoid logging the same message multiple times
+     */
+    private $sentMessagesIds = [];
+
+    /**
+     * @param LoggerInterface $logger
+     */
     public function addLogger(LoggerInterface $logger)
     {
         $this->loggers[] = $logger;
@@ -33,20 +41,28 @@ class SendListener implements Swift_Events_SendListener
     }
 
     /**
-     * Log the event with each logger that was passed to this service
+     * Log the event with each logger that was passed to this service. When spooling, Swift Mailer
+     * dispatches sendPerformed event twice, so check if it hasn't been dispatched already
      *
      * @param Swift_Events_SendEvent $evt
      */
     public function sendPerformed(Swift_Events_SendEvent $evt)
     {
+        $message = $evt->getMessage();
+
         $data = [
-            'message' => $evt->getMessage(),
+            'message' => $message,
             'result' => $this->getReadableResult($evt)
         ];
 
+        $id = $message->getId();
+
         /** @var $logger LoggerInterface */
         foreach($this->loggers as $logger) {
-            $logger->log($data);
+            if (!in_array($id, $this->sentMessagesIds)) {
+                $logger->log($data);
+                $this->sentMessagesIds[] = $id;
+            }
         }
     }
 
