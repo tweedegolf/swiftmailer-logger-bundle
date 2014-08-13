@@ -1,12 +1,13 @@
 # SwiftmailerLoggerBundle
 
 The tweedegolf SwiftmailerLoggerBundle provides an easy way to log messages sent with Swift Mailer. Currently
-only the use of the bundle's 'entity_logger' is supported, which uses its `LoggedMessage` entity to store
-the details of a message that was sent, using Doctrine.
+the bundle only provides an 'entity logger', which uses its `LoggedMessage` Doctrine entity to store
+the details of a message that was sent. In the near future, a file logger will be added.
 
 ## Installation and configuration
 
-Using [Composer][composer], please run
+Using [Composer][composer], please run the following command to add the bundle to your composer.json and to install it
+immediately:
 
 ```
 composer require tweedegolf/swiftmailer-logger-bundle:dev-master
@@ -22,8 +23,10 @@ tweede_golf_swiftmailer_logger:
             enabled: true
 ```
 
+This will enable the only logger that is currently available: the entity logger.
+
 ### Add the bundle to your AppKernel
-Finally add the bundle in `app/AppKernel.php`:
+Add the bundle in `app/AppKernel.php`, as shown below:
 
 ```php
 public function registerBundles()
@@ -31,14 +34,14 @@ public function registerBundles()
     return array(
         // ...
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new TweedeGolf\SwiftmailerLoggerBundle\TweedeGolfSwiftmailerLoggerBundle(),
+        new TweedeGolf\SwiftmailerLoggerBundle\TweedeGolfSwiftmailerLoggerBundle(),
         // ...
     );
 }
 ```
 
 ### Update your datbase schema
-The final step is to update your database schema, such that `LoggedMessage` entities can be stored by doctrine.
+Finally, update your database schema such that `LoggedMessage` entities can be stored by Doctrine.
 
 ## Usage
 With the above all set up, logging is automatic. The bundle provides a listener that listens to the
@@ -46,7 +49,7 @@ With the above all set up, logging is automatic. The bundle provides a listener 
 
 ### Retrieving logged messages
 The bundle provides an empty `LoggedMessage` repository that can be used to retrieve messages logged by the entity logger.
-Retrieve it in your custom controller by using:
+Retrieve it for example in one of your controllers by using:
 
 ```
 $repo = $this->getDoctrine()->getRepository("TweedeGolfSwiftmailerLoggerBundle:LoggedMessage");
