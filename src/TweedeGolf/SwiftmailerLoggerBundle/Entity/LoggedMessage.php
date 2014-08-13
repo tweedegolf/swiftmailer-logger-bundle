@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Contains most of the properties that can be retrieved from a Swift_Message instance
  *
  * @package TweedeGolf\SwiftmailerLoggerBundle\Entity
- * @Entity
+ * @Entity(repositoryClass="TweedeGolf\SwiftmailerLoggerBundle\Entity\Repository\LoggedMessageRepository")
  * @Table(name="tweedegolf_logged_message")
  */
 class LoggedMessage
