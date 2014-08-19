@@ -329,8 +329,7 @@ class LoggedMessage
      */
     public function getSwiftMessage(){
         $message = new \Swift_Message();
-                
-        $message->setDate($this->getDate());
+        $message->setDate($this->getDate()->getTimestamp());
         $message->setFrom($this->getFrom());
         $message->setReplyTo($this->getReplyTo());
         $message->setReturnPath($this->getReturnPath());
