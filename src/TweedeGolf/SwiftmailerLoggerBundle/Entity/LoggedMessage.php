@@ -338,8 +338,7 @@ class LoggedMessage
         $message->setBcc($this->getBcc());
         $message->setSubject($this->getSubject());
         $message->setBody($this->getBody());
-        $message->setId($this->getGeneratedId());
-        
+
         return $message;
     }
 }
