@@ -321,4 +321,26 @@ class LoggedMessage
         $this->setBody($message->getBody());
         $this->setGeneratedId($message->getId());
     }
+    
+    /**
+     * Returns a Swift_Message instance that can be sent
+     * 
+     * @return \Swift_Message
+     */
+    public function getSwiftMessage(){
+        $message = new \Swift_Message();
+                
+        $message->setDate($this->getDate());
+        $message->setFrom($this->getFrom());
+        $message->setReplyTo($this->getReplyTo());
+        $message->setReturnPath($this->getReturnPath());
+        $message->setTo($this->getTo());
+        $message->setCc($this->getCc());
+        $message->setBcc($this->getBcc());
+        $message->setSubject($this->getSubject());
+        $message->setBody($this->getBody());
+        $message->setId($this->getId());
+        
+        return $message;
+    }
 }
