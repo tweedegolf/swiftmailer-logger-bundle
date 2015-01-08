@@ -36,5 +36,10 @@ class TweedeGolfSwiftmailerLoggerExtension extends Extension
 
             unset($def);
         }
+        
+        // store the name of the swift instances we want to watch
+        if($config[ 'swift_instances' ]){
+            $container->setParameter( 'tweedegolf_swiftmailer_logger.swift_instances', $config[ 'swift_instances' ]);
+        }
     }
 }
