@@ -56,4 +56,32 @@ $repo = $this->getDoctrine()->getRepository("TweedeGolfSwiftmailerLoggerBundle:L
 
 ```
 
+### Use multiple or custom instances of Swift mailer
+If you are using multiple Swift instances on your application or if you have overwritten the name of your Swift instance, modify your `app/config.yml` as shown below:
+```
+tweede_golf_swiftmailer_logger:
+   swift_instances:
+        - default
+        - secondary_smtp
+        
+    loggers:
+        entity_logger:
+            enabled: true
+            
+# Swiftmailer Configuration as example
+#swiftmailer:
+#    default_mailer: default
+#    mailers:
+#        default:
+#            transport:  %swift_transport%
+#            username: %swift_username%
+#            password: %swift_password%
+#
+#        secondary_smtp:
+#            transport:  %swift_transport2%
+#            username: %swift_username2%
+#            password: %swift_password2%
+
+```
+
 [composer]: https://getcomposer.org/
