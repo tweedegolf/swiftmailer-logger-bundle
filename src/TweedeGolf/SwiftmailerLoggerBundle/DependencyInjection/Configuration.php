@@ -22,13 +22,16 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('loggers')
-            ->children()
-            ->arrayNode('entity_logger')
-            ->children()
-            ->booleanNode('enabled')->defaultTrue()
+                ->arrayNode('swift_instances')
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('loggers')
+                ->children()
+                    ->arrayNode('entity_logger')
+                    ->children()
+                        ->booleanNode('enabled')->defaultTrue()
         ;
-
+        
         return $treeBuilder;
     }
 }
