@@ -2,7 +2,7 @@
 
 The tweedegolf SwiftmailerLoggerBundle provides an easy way to log messages sent with Swift Mailer. Currently
 the bundle only provides an 'entity logger', which uses its `LoggedMessage` Doctrine entity to store
-the details of a message that was sent. In the near future, a file logger will be added.
+the details of a message that was sent. In the near future, a file logger will be added. Please note that the bundle is a work in progress and pay attention to the issue that was reported on 10-9-2014 about using lifecycle events.
 
 ## Installation and configuration
 
