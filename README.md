@@ -40,12 +40,28 @@ public function registerBundles()
 }
 ```
 
-### Update your datbase schema
+### Update your database schema
 Finally, update your database schema such that `LoggedMessage` entities can be stored by Doctrine.
 
 ## Usage
 With the above all set up, logging is automatic. The bundle provides a listener that listens to the
 `Swift_Events_SendEvent sendPerformed` event on which it passes on the data to be logged to any loggers configured.
+
+
+### What is being logged?
+Every time an email is sent in your app with Swiftmailer, an LoggedMessage record is written to the database. This record contains the following info
+- the from, to, replyTo, cc and bcc address fields, all stored as array type
+- the return path (string)
+- the subject of the message
+- the body of the message
+- the date and time that the message was sent
+- the sending result
+- any failed recipients
+
+Of these, the sending result and failed recipients require some explanation. The sending result always contains one of the following strings "pending", "success", "tentative", "failed" or "unknown"
+representing the results (except for "spooled") that a Swift_Events_SendEvent can have. In the failed recipients field recipients are logged for which a
+Swift_RfcComplianceException or Swift_TransportException was thrown during sending. Note that a "success" result and no failed recipients *does not mean* that all recipients actually received the
+email that was logged: we only no that there were no problems during sending.
 
 ### Retrieving logged messages
 The bundle provides an empty `LoggedMessage` repository that can be used to retrieve messages logged by the entity logger.
@@ -67,20 +83,23 @@ tweede_golf_swiftmailer_logger:
     loggers:
         entity_logger:
             enabled: true
-            
-# Swiftmailer Configuration as example
-#swiftmailer:
-#    default_mailer: default
-#    mailers:
-#        default:
-#            transport:  %swift_transport%
-#            username: %swift_username%
-#            password: %swift_password%
-#
-#        secondary_smtp:
-#            transport:  %swift_transport2%
-#            username: %swift_username2%
-#            password: %swift_password2%
+```
+
+Using multiple Swift instances, your Swiftmailer configuration will look something like this:
+
+```
+swiftmailer:
+    default_mailer: default
+    mailers:
+        default:
+            transport:  %swift_transport%
+            username: %swift_username%
+            password: %swift_password%
+
+        secondary_smtp:
+            transport:  %swift_transport2%
+            username: %swift_username2%
+            password: %swift_password2%
 
 ```
 

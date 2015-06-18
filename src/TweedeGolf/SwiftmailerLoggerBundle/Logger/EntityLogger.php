@@ -39,11 +39,10 @@ class EntityLogger implements LoggerInterface
      */
     public function log(array $data)
     {
-        $sentMessage = $data['message'];
-
         $loggedMessage = new LoggedMessage();
-        $loggedMessage->setMessageFields($sentMessage);
+        $loggedMessage->setMessageFields($data['message']);
         $loggedMessage->setResult($data['result']);
+        $loggedMessage->setFailedRecipients($data['failed_recipients']);
 
         $em = $this->doctrine->getManager();
 

@@ -18,11 +18,6 @@ class SendListener implements Swift_Events_SendListener
     private $loggers = [];
 
     /**
-     * @var array keep array of ids of messages that were sent to avoid logging the same message multiple times
-     */
-    private $sentMessagesIds = [];
-
-    /**
      * @param LoggerInterface $logger
      */
     public function addLogger(LoggerInterface $logger)
@@ -42,27 +37,29 @@ class SendListener implements Swift_Events_SendListener
 
     /**
      * Log the event with each logger that was passed to this service. When spooling, Swift Mailer
-     * dispatches sendPerformed event twice, so check if it hasn't been dispatched already
+     * dispatches the sendPerformed event twice, in that case, only log the second sendPerformed event
      *
      * @param Swift_Events_SendEvent $evt
+     * @return bool
      */
     public function sendPerformed(Swift_Events_SendEvent $evt)
     {
         $message = $evt->getMessage();
 
+        // do nothing with a spooled messages, there comes a second send event
+        if ($this->getReadableResult($evt) === 'spooled') {
+            return false;
+        }
+
         $data = [
             'message' => $message,
-            'result' => $this->getReadableResult($evt)
+            'result' => $this->getReadableResult($evt),
+            'failed_recipients' => $evt->getFailedRecipients()
         ];
-
-        $id = $message->getId();
 
         /** @var $logger LoggerInterface */
         foreach($this->loggers as $logger) {
-            if (!in_array($id, $this->sentMessagesIds)) {
-                $logger->log($data);
-                $this->sentMessagesIds[] = $id;
-            }
+            $logger->log($data);
         }
     }
 
@@ -72,7 +69,7 @@ class SendListener implements Swift_Events_SendListener
      * @param Swift_Events_SendEvent $evt
      * @return string
      */
-    private  function getReadableResult(Swift_Events_SendEvent $evt)
+    private function getReadableResult(Swift_Events_SendEvent $evt)
     {
         $result = $evt->getResult();
 
@@ -82,6 +79,10 @@ class SendListener implements Swift_Events_SendListener
 
         if ($result === 16) {
             return 'success';
+        }
+
+        if ($result === 17) {
+            return 'spooled';
         }
 
         if ($result === 256) {

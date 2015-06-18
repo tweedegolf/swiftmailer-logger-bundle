@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class LoggedMessage - represents a logged message
  *
- * Contains most of the properties that can be retrieved from a Swift_Message instance
+ * Contains most of the properties that can be retrieved from a Swift_Message instance plus some extra
  *
  * @package TweedeGolf\SwiftmailerLoggerBundle\Entity
  * @Entity(repositoryClass="TweedeGolf\SwiftmailerLoggerBundle\Entity\Repository\LoggedMessageRepository")
@@ -48,7 +48,7 @@ class LoggedMessage
     private $to;
 
     /**
-     * @var string
+     * @var string Unique identifier of the Swift_Message that was sent
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\NotNull()
@@ -94,7 +94,7 @@ class LoggedMessage
     /**
      * @var DateTime
      *
-     * Different from the  Swift_message date field, which is a timestamp
+     * Different from the Swift_message date field, which is a timestamp
      *
      * @ORM\Column(name="date_field", type="datetime", nullable=false)
      */
@@ -117,6 +117,13 @@ class LoggedMessage
      * @Assert\NotBlank()
      */
     private $result;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $failedRecipients;
 
     /**
      * @return int
@@ -300,6 +307,22 @@ class LoggedMessage
     public function getTo()
     {
         return $this->to;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFailedRecipients()
+    {
+        return $this->failedRecipients;
+    }
+
+    /**
+     * @param array $failedRecipients
+     */
+    public function setFailedRecipients($failedRecipients)
+    {
+        $this->failedRecipients = $failedRecipients;
     }
 
     /**
