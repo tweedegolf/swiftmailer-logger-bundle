@@ -49,7 +49,7 @@ class EntityLogger implements LoggerInterface
         // application should not crash when logging fails
         try {
             $em->persist($loggedMessage);
-            $em->flush();
+            $em->flush($loggedMessage);
         } catch (\Exception $e) {
             $message = 'Logging sent message with TweedeGolf\SwiftmailerLoggerBundle\Logger\EntityLogger failed: ' .
                 $e->getMessage();
