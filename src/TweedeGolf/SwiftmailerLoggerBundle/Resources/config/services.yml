@@ -6,8 +6,8 @@ services:
   tweedegolf_swiftmailer_logger.entity_logger:
     class:  TweedeGolf\SwiftmailerLoggerBundle\Logger\EntityLogger
     arguments:
-      - @doctrine
-      - @logger
+      - "@doctrine"
+      - "@logger"
 
   # todo add a file logger
 
