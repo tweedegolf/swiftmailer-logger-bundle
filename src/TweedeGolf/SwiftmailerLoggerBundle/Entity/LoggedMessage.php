@@ -6,7 +6,6 @@ use DateTime;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
-use Swift_Mime_Message;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -330,7 +329,7 @@ class LoggedMessage
      *
      * @param Swift_Mime_Message $message
      */
-    public function setMessageFields(Swift_Mime_Message $message)
+    public function setMessageFields(\Swift_Message $message)
     {
         $date = new DateTime();
         $this->setDate($date->setTimestamp($message->getDate()));
