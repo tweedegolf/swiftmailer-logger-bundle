@@ -30,6 +30,11 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('entity_logger')
                     ->children()
                         ->booleanNode('enabled')->defaultTrue()
+                        ->end()
+                    ->end()
+                    ->arrayNode('symfony_logger')
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()
         ;
         
         return $treeBuilder;

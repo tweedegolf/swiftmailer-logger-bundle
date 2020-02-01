@@ -34,6 +34,10 @@ class TweedeGolfSwiftmailerLoggerExtension extends Extension
                 $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.entity_logger')));
             }
 
+            if ($config['loggers']['symfony_logger']['enabled']) {
+                $def->addMethodCall('addLogger', array(new Reference('tweedegolf_swiftmailer_logger.symfony_logger')));
+            }
+
             unset($def);
         }
         
