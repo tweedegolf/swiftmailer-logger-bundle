@@ -21,6 +21,8 @@ tweede_golf_swiftmailer_logger:
     loggers:
         entity_logger:
             enabled: true
+        symfony_logger:
+            enabled: true
 ```
 
 This will enable the only logger that is currently available: the entity logger.
