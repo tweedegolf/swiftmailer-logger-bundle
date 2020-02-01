@@ -9,8 +9,10 @@
     }
   ],
   "require": {
-    "php": ">=5.4",
-    "symfony/symfony": "^2.8 || ^3.4 || ^4.4",
+    "php": ">=7.0",
+    "symfony/framework-bundle": "*",
+    "symfony/monolog-bundle": "*",
+    "symfony/orm-pack": "*",
     "symfony/swiftmailer-bundle": "^2.3 || ^3.1"
   },
   "require-dev": {
