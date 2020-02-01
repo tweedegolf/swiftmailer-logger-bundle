@@ -20,23 +20,29 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('tweedegolf_swiftmailer_logger');
 
+
         $rootNode
             ->children()
                 ->arrayNode('swift_instances')
                     ->prototype('scalar')->end()
                 ->end()
                 ->arrayNode('loggers')
-                ->children()
-                    ->arrayNode('entity_logger')
                     ->children()
-                        ->booleanNode('enabled')->defaultTrue()
+                        ->arrayNode('entity_logger')
+                            ->children()
+                                ->booleanNode('enabled')->defaultTrue()->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('symfony_logger')
+                            ->children()
+                                ->booleanNode('enabled')->defaultFalse()->end()
+                            ->end()
                         ->end()
                     ->end()
-                    ->arrayNode('symfony_logger')
-                    ->children()
-                        ->booleanNode('enabled')->defaultFalse()
+                ->end()
+            ->end()
         ;
-        
+
         return $treeBuilder;
     }
 }
