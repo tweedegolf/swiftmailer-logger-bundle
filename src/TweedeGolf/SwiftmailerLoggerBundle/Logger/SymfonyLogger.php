@@ -30,7 +30,7 @@ class SymfonyLogger implements LoggerInterface
      */
     public function log(array $data)
     {
-        $this->logger->addInfo(\sprint(
+        $this->logger->addInfo(\sprintf(
             'from: %s; reply-to: %s; return-path: %s; to: %s; cc: %s; bcc: %s; subject: %s; date: %s',
             $data['message']->getFrom(),
             $data['message']->getReplyTo(),
