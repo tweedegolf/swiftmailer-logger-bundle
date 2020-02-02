@@ -12,7 +12,7 @@ services:
   tweedegolf_swiftmailer_logger.symfony_logger:
     class:  TweedeGolf\SwiftmailerLoggerBundle\Logger\SymfonyLogger
     arguments:
-      - "@logger"
+      - "@monolog.logger.mailer"
 
   # todo add a file logger
 

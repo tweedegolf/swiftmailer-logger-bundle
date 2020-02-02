@@ -20,9 +20,9 @@ class SymfonyLogger implements LoggerInterface
     /**
      * @param PsrLoggerInterface $logger
      */
-    public function __construct(PsrLoggerInterface $logger)
+    public function __construct(PsrLoggerInterface $mailerLogger)
     {
-        $this->logger = $logger;
+        $this->logger = $mailerLogger;
     }
 
 

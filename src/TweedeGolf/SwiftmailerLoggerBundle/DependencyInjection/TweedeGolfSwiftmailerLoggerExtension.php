@@ -45,5 +45,11 @@ class TweedeGolfSwiftmailerLoggerExtension extends Extension
         if($config[ 'swift_instances' ]){
             $container->setParameter( 'tweedegolf_swiftmailer_logger.swift_instances', $config[ 'swift_instances' ]);
         }
+
+        // add monolog channel
+        $channels = $container->getParameter('monolog.additional_channels');
+        $channels[] = 'mailer';
+
+        $container->setParameter( 'monolog.additional_channels', $channels);
     }
 }
