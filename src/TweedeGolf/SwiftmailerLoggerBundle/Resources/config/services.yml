@@ -9,5 +9,10 @@ services:
       - "@doctrine"
       - "@logger"
 
+  tweedegolf_swiftmailer_logger.symfony_logger:
+    class:  TweedeGolf\SwiftmailerLoggerBundle\Logger\SymfonyLogger
+    arguments:
+      - "@monolog.logger.mailer"
+
   # todo add a file logger
 
