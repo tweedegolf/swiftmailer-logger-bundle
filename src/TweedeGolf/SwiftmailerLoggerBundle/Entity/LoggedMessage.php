@@ -332,7 +332,14 @@ class LoggedMessage
     public function setMessageFields(\Swift_Message $message)
     {
         $date = new DateTime();
-        $this->setDate($date->setTimestamp($message->getDate()));
+
+        // To prevent a lot of warnings
+        $messageDate = $message->getDate();
+        if (is_object($messageDate)) {
+            $messageDate = $messageDate->getTimestamp();
+        }
+
+        $this->setDate($date->setTimestamp($messageDate));
         $this->setFrom($message->getFrom());
         $this->setReplyTo($message->getReplyTo());
         $this->setReturnPath($message->getReturnPath());
